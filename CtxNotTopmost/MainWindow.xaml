@@ -6,12 +6,30 @@
          xmlns:tb="clr-namespace:H.NotifyIcon;assembly=H.NotifyIcon.Wpf" 
         xmlns:local="clr-namespace:CtxNotTopmost"
         mc:Ignorable="d"
-        Title="CtxNotTopMost" Height="450" Width="800" Activated="Window_Activated" Closing="Window_Closing" ShowInTaskbar="False" WindowState="Minimized" Loaded="Window_Loaded"  >
-    <tb:TaskbarIcon ToolTipText="Ctx NotTopMost" IconSource="/CTXNOTTOPMOST.ico">
-        <tb:TaskbarIcon.ContextMenu>
-            <ContextMenu>
-                <MenuItem Header="End program"  Click="MenuItem_Click"/>
-            </ContextMenu>
-        </tb:TaskbarIcon.ContextMenu>
-    </tb:TaskbarIcon>
+        Title="{Binding Title}" Height="450" Width="206" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" AllowsTransparency="True" Background="#99000000">
+    <Grid Margin="3">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <tb:TaskbarIcon ToolTipText="Ctx NotTopMost" IconSource="/CTXNOTTOPMOST.ico">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="End program"  Click="MenuItem_Click"/>
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
+        <Border Background="White" MouseDown="Image_MouseDown">
+            <Image Source="/CTXNOTTOPMOST.png" Height="64"  RenderOptions.BitmapScalingMode="Fant" />
+        </Border>
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" Margin="0,2,0,0" >
+            <ItemsControl ItemsSource="{Binding ActiveWindows,Mode=TwoWay}" Grid.Row="1">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Width="200" Content="{Binding Title}" HorizontalContentAlignment="Left" Margin="0,2,0,2" Padding="4" Command="{Binding Path=DataContext.FocusWindowCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" CommandParameter="{Binding .}" Background="White" BorderThickness="0" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
 </Window>

@@ -1,4 +1,5 @@
 ﻿using CtxNotTopmost.Services;
+using CtxNotTopmost.ViewModels;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace CtxNotTopmost
 {
@@ -15,56 +17,11 @@ namespace CtxNotTopmost
     public partial class MainWindow : Window
     {
 
-        CancellationTokenSource tokenSource;
-        WindowService windowService;
+
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        //private async Task DetectTopMost()
-        //{
-        //    WindowService windowService = new WindowService();
-        //    windowService.TopMostDetected += WindowService_TopMostDetected;
-        //    //await windowService.DetectTopMost("CDViewer", Properties.Settings.Default.WindowToDisplay.Cast<string>().ToArray());
-        //}
-
-        private void WindowService_TopMostDetected(object? sender, string e)
-        {
-            Debug.WriteLine(DateTime.Now.ToShortTimeString() + " " + e);
-        }
-
-        private void Window_Activated(object sender, EventArgs e)
-        {
-
-        }
-
-        public async Task DetectTopMost()
-        {
-            tokenSource = new CancellationTokenSource();
-            windowService = new WindowService();
-            windowService.TopMostDetected += WindowService_TopMostDetected;
-            Task.Run(() => DetectingApps(tokenSource.Token));
-        }
-
-        private async Task DetectingApps(CancellationToken token)
-        {
-            do
-            {
-                await windowService.DetectTopMost("CDViewer", Properties.Settings.Default.WindowToDisplay.Cast<string>().ToArray());
-            } while (!token.IsCancellationRequested);
-
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            tokenSource.Cancel();
-        }
-
-        protected override async void OnClosing(CancelEventArgs e)
-        {
-            tokenSource.Cancel();
-            await windowService.Halt(Properties.Settings.Default.WindowToDisplay.Cast<string>().ToArray());
+            DataContext = new MainViewModel();
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -72,9 +29,10 @@ namespace CtxNotTopmost
             this.Close();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Image_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            DetectTopMost();
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
         }
     }
 }
