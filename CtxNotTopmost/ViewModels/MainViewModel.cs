@@ -69,6 +69,15 @@ namespace CtxNotTopmost.ViewModels
                         {
                             activeWindows.Remove(item);
                         }
+                        else
+                        {
+                            ActiveWindow a = activeWindows.Where(a => a.wHnd == item.wHnd).FirstOrDefault();
+                            if (a != null)
+                            {
+                                ActiveWindow g = getActiveWindows.Where(a => a.wHnd == item.wHnd).First();
+                                a.Title = $"{g.ProcessName}: {g.Title}";
+                            }
+                        }
                     }
                     //});
                     ActiveWindows = ActiveWindows.OrderBy(w => w.Title).ToList();
