@@ -9,4 +9,8 @@ Before starting the application enter te names of the applications you wish to p
 The application can be stopped by clicking the icon in the system tray list.
 ![image](https://user-images.githubusercontent.com/31825690/205658378-f6e67b07-0eea-47e3-8154-674271af7987.png)
 
+A widget is always available on top. This allows users to bring additional local applications in front of the Citrix window.
+
+![image](https://user-images.githubusercontent.com/31825690/211026096-2a4943e0-fa63-4381-b87f-cca6e35fd9ca.png)
+
 The application has been tested in combination with Citrix Workspace 19.12.7000.10.
