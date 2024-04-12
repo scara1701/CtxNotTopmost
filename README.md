@@ -1,5 +1,7 @@
 Ctx NotTopmost
 
+Notice: We've stopped using Citrix at our company. As a result I will probably not update this project any further.
+
 This application will suppress the topmost behavior of the Citrix client software. Applications listed in the config file will be given a topmost flag which will put them on top of the Citrix window.
 
 Before starting the application enter te names of the applications you wish to put on top of the Citrix Window in the config file (ctxnottopmost.dll.config).
